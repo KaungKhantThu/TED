@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.kkt.ted.data.vos.PodcastVO;
 import xyz.kkt.ted.viewHolders.BaseViewHolder;
 
 

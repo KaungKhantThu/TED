@@ -19,10 +19,6 @@ public class TalksAdapter extends BaseRecycleAdapter<TalksViewHolder, TalksVO> {
         super(context);
     }
 
-    @Override
-    public void onBindViewHolder(TalksViewHolder holder, int position) {
-
-    }
 
     @Override
     public TalksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,8 +26,4 @@ public class TalksAdapter extends BaseRecycleAdapter<TalksViewHolder, TalksVO> {
         return new TalksViewHolder(itemView);
     }
 
-    @Override
-    public int getItemCount() {
-        return 5;
-    }
 }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import xyz.kkt.ted.R;
+import xyz.kkt.ted.data.vos.PlaylistVO;
 import xyz.kkt.ted.data.vos.TalksVO;
 import xyz.kkt.ted.viewHolders.PlaylistViewHolder;
 
@@ -13,15 +14,10 @@ import xyz.kkt.ted.viewHolders.PlaylistViewHolder;
  * Created by Lenovo on 11/8/2017.
  */
 
-public class PlaylistAdapter extends BaseRecycleAdapter<PlaylistViewHolder, TalksVO> {
+public class PlaylistAdapter extends BaseRecycleAdapter<PlaylistViewHolder, PlaylistVO> {
 
     public PlaylistAdapter(Context context) {
         super(context);
-    }
-
-    @Override
-    public void onBindViewHolder(PlaylistViewHolder holder, int position) {
-
     }
 
     @Override
@@ -30,8 +26,4 @@ public class PlaylistAdapter extends BaseRecycleAdapter<PlaylistViewHolder, Talk
         return new PlaylistViewHolder(itemView);
     }
 
-    @Override
-    public int getItemCount() {
-        return 16;
-    }
 }

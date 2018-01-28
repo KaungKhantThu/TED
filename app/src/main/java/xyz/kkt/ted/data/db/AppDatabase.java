@@ -21,26 +21,26 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import xyz.kkt.ted.data.vos.PlaylistVO;
+import xyz.kkt.ted.data.vos.PodcastVO;
+import xyz.kkt.ted.data.vos.SearchVO;
+import xyz.kkt.ted.data.vos.SegmentVO;
 import xyz.kkt.ted.data.vos.SpeakerVO;
 import xyz.kkt.ted.data.vos.TagVO;
-import xyz.kkt.ted.data.vos.TalkTagVO;
+import xyz.kkt.ted.data.vos.TalksInPlaylistVO;
 import xyz.kkt.ted.data.vos.TalksVO;
 
 
-@Database(entities = {TalksVO.class, SpeakerVO.class, TagVO.class, TalkTagVO.class}, version = 1, exportSchema = false)
+@Database(entities = {TalksVO.class, PlaylistVO.class, PodcastVO.class, SearchVO.class,
+        //SpeakerVO.class, SegmentVO.class, TagVO.class, TalksInPlaylistVO.class
+}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "TED.DB";
 
     private static AppDatabase INSTANCE;
 
-    public abstract TalksDao talksDao();//RestaurantDao restaurantDao; name must be same but start with small letter
-
-    public abstract TagsDao tagsDao();//RestaurantDao restaurantDao; name must be same but start with small letter
-
-    public abstract SpeakersDao speakersDao();//RestaurantDao restaurantDao; name must be same but start with small letter
-
-    public abstract TalkTagDao talkTagDao();//RestaurantDao restaurantDao; name must be same but start with small letter
+    public abstract TalksDao talksDao();
 
     public static AppDatabase getInDatabase(Context context) {
         if (INSTANCE == null) {

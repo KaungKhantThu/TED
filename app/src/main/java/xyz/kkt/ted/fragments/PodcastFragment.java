@@ -1,6 +1,8 @@
 package xyz.kkt.ted.fragments;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.kkt.ted.R;
@@ -19,6 +23,9 @@ import xyz.kkt.ted.adapters.TalksAdapter;
 import xyz.kkt.ted.components.EmptyViewPod;
 import xyz.kkt.ted.components.SmartRecyclerView;
 import xyz.kkt.ted.components.SmartScrollListener;
+import xyz.kkt.ted.data.models.TEDModel;
+import xyz.kkt.ted.data.vos.PodcastVO;
+import xyz.kkt.ted.data.vos.TalksVO;
 
 /**
  * Created by Lenovo on 11/8/2017.
@@ -30,6 +37,7 @@ public class PodcastFragment extends BaseFragment {
 
     private PodcastAdapter mPodcastAdapter;
 
+    private TEDModel mTedModel;
 
     @BindView(R.id.vp_empty_podcast)
     EmptyViewPod vpEmptyPodcast;
@@ -71,7 +79,7 @@ public class PodcastFragment extends BaseFragment {
         rvPodcast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvPodcast.setAdapter(mPodcastAdapter);
 
-        mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
+        /*mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
             @Override
             public void onListEndReach() {
                 Snackbar.make(rvPodcast, "Loading new data.", Snackbar.LENGTH_LONG).show();
@@ -89,8 +97,20 @@ public class PodcastFragment extends BaseFragment {
             }
         });
 
-        rvPodcast.addOnScrollListener(mSmartScrollListener);
+        rvPodcast.addOnScrollListener(mSmartScrollListener);*/
 
+        mTedModel = ViewModelProviders.of(this).get(TEDModel.class);
+        mTedModel.initDatabase(getContext());
+        mTedModel.callPodcastApi();
+        if (mTedModel.getTedPodCastList() != null) {
+//            mTalksAdapter.setNewData(mTedModel.getTalks());
+            mTedModel.getTedPodCastList().observe(this, new Observer<List<PodcastVO>>() {
+                @Override
+                public void onChanged(@Nullable List<PodcastVO> podcastList) {
+                    mPodcastAdapter.setNewData(podcastList);
+                }
+            });
+        }
         return view;
     }
 }

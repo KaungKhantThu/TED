@@ -27,9 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_hero_podcast"
-            android:drawablePadding="@dimen/margin_for_podcast"
-            android:drawableRight="@drawable/ic_more_vert_24dp"
-            android:drawableTint="@color/black_full"
             android:text="@string/podcast_title"
             android:textColor="@color/black_full"
             android:textSize="@dimen/text_heading_2x" />
@@ -42,6 +39,17 @@
             android:maxLines="3"
             android:text="@string/podcast_desc"
             android:textColor="@color/black_full" />
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/iv_hero_podcast"
+            android:layout_marginRight="@dimen/margin_medium_2"
+            android:layout_marginTop="@dimen/margin_medium_2"
+            android:src="@drawable/ic_more_vert_24dp"
+            android:tint="@color/black_full" />
 
     </RelativeLayout>
 

@@ -97,7 +97,7 @@ public class TalksFragment extends BaseFragment {
         rvTalks.addOnScrollListener(mSmartScrollListener);*/
 
         mTedModel = ViewModelProviders.of(this).get(TEDModel.class);
-        //mTedModel.initDatabase(getContext());
+        mTedModel.initDatabase(getContext());
         mTedModel.callTalkApi();
         if (mTedModel.getTalks() != null) {
 //            mTalksAdapter.setNewData(mTedModel.getTalks());

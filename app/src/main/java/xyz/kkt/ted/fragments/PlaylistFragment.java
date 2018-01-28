@@ -1,6 +1,8 @@
 package xyz.kkt.ted.fragments;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.kkt.ted.R;
@@ -20,6 +24,9 @@ import xyz.kkt.ted.adapters.TalksAdapter;
 import xyz.kkt.ted.components.EmptyViewPod;
 import xyz.kkt.ted.components.SmartRecyclerView;
 import xyz.kkt.ted.components.SmartScrollListener;
+import xyz.kkt.ted.data.models.TEDModel;
+import xyz.kkt.ted.data.vos.PlaylistVO;
+import xyz.kkt.ted.data.vos.PodcastVO;
 
 /**
  * Created by Lenovo on 11/8/2017.
@@ -31,6 +38,7 @@ public class PlaylistFragment extends BaseFragment {
 
     private PlaylistAdapter mPlaylistAdapter;
 
+    private TEDModel mTedModel;
 
     @BindView(R.id.vp_empty_playlist)
     EmptyViewPod vpEmptyPlaylist;
@@ -58,7 +66,7 @@ public class PlaylistFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPlaylistAdapter= new PlaylistAdapter(getContext());
+        mPlaylistAdapter = new PlaylistAdapter(getContext());
 
     }
 
@@ -73,7 +81,7 @@ public class PlaylistFragment extends BaseFragment {
 
         rvPlaylist.setAdapter(mPlaylistAdapter);
 
-        mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
+        /*mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
             @Override
             public void onListEndReach() {
                 Snackbar.make(rvPlaylist, "Loading new data.", Snackbar.LENGTH_LONG).show();
@@ -91,8 +99,20 @@ public class PlaylistFragment extends BaseFragment {
             }
         });
 
-        rvPlaylist.addOnScrollListener(mSmartScrollListener);
+        rvPlaylist.addOnScrollListener(mSmartScrollListener);*/
 
+        mTedModel = ViewModelProviders.of(this).get(TEDModel.class);
+        mTedModel.initDatabase(getContext());
+        mTedModel.callPlaylistApi();
+        if (mTedModel.getTedPlayList() != null) {
+//            mTalksAdapter.setNewData(mTedModel.getTalks());
+            mTedModel.getTedPlayList().observe(this, new Observer<List<PlaylistVO>>() {
+                @Override
+                public void onChanged(@Nullable List<PlaylistVO> playlistList) {
+                    mPlaylistAdapter.setNewData(playlistList);
+                }
+            });
+        }
         return view;
     }
 }

@@ -4,30 +4,26 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.kkt.ted.TEDApp;
-import xyz.kkt.ted.activities.SearchActivity;
 import xyz.kkt.ted.data.db.AppDatabase;
-import xyz.kkt.ted.data.vos.SpeakerVO;
-import xyz.kkt.ted.data.vos.TagVO;
-import xyz.kkt.ted.data.vos.TalkTagVO;
+import xyz.kkt.ted.data.vos.PlaylistVO;
+import xyz.kkt.ted.data.vos.PodcastVO;
+import xyz.kkt.ted.data.vos.SearchVO;
 import xyz.kkt.ted.data.vos.TalksVO;
 import xyz.kkt.ted.network.apis.TEDAPI;
 import xyz.kkt.ted.network.responses.PlaylistResponse;
@@ -78,21 +74,38 @@ public class TEDModel extends ViewModel {
     }
 
     public LiveData<List<TalksVO>> getTalks() {
-        return mAppDatabase.talksDao().getAllTalks();
+        return mAppDatabase.talksDao().getAllTedTalks();
+    }
+
+    public LiveData<List<PlaylistVO>> getTedPlayList() {
+        return mAppDatabase.talksDao().getAllTedPlayList();
+    }
+
+    public LiveData<List<PodcastVO>> getTedPodCastList() {
+        return mAppDatabase.talksDao().getAllTedPodCast();
+    }
+
+    public TalksVO getTedTalkByID(long tedTalkId) {
+        return mAppDatabase.talksDao().getTedTalksById(tedTalkId);
+    }
+
+    public PlaylistVO getTedPlayListByID(long tedPlayListId) {
+        return mAppDatabase.talksDao().getTedPlayListById(tedPlayListId);
+    }
+
+    public PodcastVO getTedPodCastByID(long tedPodCastId) {
+        return mAppDatabase.talksDao().getTedPodCastById(tedPodCastId);
+    }
+
+    public LiveData<List<SearchVO>> getSearchDataByValue(String searchValue, String resultType) {
+        return mAppDatabase.talksDao().getSearchDataByValue(searchValue, resultType);
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-//        AppDatabase.destroyInstance();
+        AppDatabase.destroyInstance();
     }
-
-//    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-//    public void onAttractionsLoadedEvent(DataEvent.AttractionsLoadedEvent event) {
-//        mAppDatabase.attractionsDao().deleteAll();
-//        long[] insertedIds = mAppDatabase.attractionsDao().insertAttractions(event.getAttractionList().toArray(new AttractionVO[0]));
-//        Log.d(MAApp.TAG, "Total inserted count : " + insertedIds.length);
-//    }
 
     public void callTalkApi() {
         Observable<TalksResponse> talksResponseObservable = getTalkListResponseObservable();
@@ -102,8 +115,8 @@ public class TEDModel extends ViewModel {
                 .subscribe(new Consumer<TalksResponse>() {
                     @Override
                     public void accept(TalksResponse talksResponse) throws Exception {
-                        mAppDatabase.talksDao().deleteAll();
-                        long[] insertedIds = mAppDatabase.talksDao().insertTalks(talksResponse.getTalkList().toArray(new TalksVO[0]));
+                        mAppDatabase.talksDao().deleteTedTalk();
+                        long[] insertedIds = mAppDatabase.talksDao().insertTedTalks(talksResponse.getTalkList().toArray(new TalksVO[0]));
                         Log.d(TEDApp.TAG, "Total inserted count : " + insertedIds.length);
                     }
                 });
@@ -114,26 +127,12 @@ public class TEDModel extends ViewModel {
         playlistResponseObservable
                 .subscribeOn(Schedulers.io()) //run value creation code on a specific thread (non-UI thread) (defining where data insertion is done)
                 .observeOn(AndroidSchedulers.mainThread()) //observe the emitted value of the Observable on an appropriate thread
-                .subscribe(new Observer<PlaylistResponse>() {
-
+                .subscribe(new Consumer<PlaylistResponse>() {
                     @Override
-                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.annotations.NonNull PlaylistResponse playlistResponse) {
-                        //TODO store data
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        Log.d(TEDApp.TAG, e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void accept(PlaylistResponse playlistResponse) throws Exception {
+                        mAppDatabase.talksDao().deleteTedPlaylist();
+                        long[] insertedIds = mAppDatabase.talksDao().insertTedPlayList(playlistResponse.getPlaylists().toArray(new PlaylistVO[0]));
+                        Log.d(TEDApp.TAG, "Total inserted count : " + insertedIds.length);
                     }
                 });
     }
@@ -143,26 +142,12 @@ public class TEDModel extends ViewModel {
         podcastResponseObservable
                 .subscribeOn(Schedulers.io()) //run value creation code on a specific thread (non-UI thread) (defining where data insertion is done)
                 .observeOn(AndroidSchedulers.mainThread()) //observe the emitted value of the Observable on an appropriate thread
-                .subscribe(new Observer<PodcastResponse>() {
-
+                .subscribe(new Consumer<PodcastResponse>() {
                     @Override
-                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.annotations.NonNull PodcastResponse podcastResponse) {
-                        //TODO store data
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        Log.d(TEDApp.TAG, e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void accept(PodcastResponse tedPodCastsResponse) throws Exception {
+                        mAppDatabase.talksDao().deleteTedPodCast();
+                        long[] insertedIds = mAppDatabase.talksDao().insertTedPodCast(tedPodCastsResponse.getPodcastList().toArray(new PodcastVO[0]));
+                        Log.d(TEDApp.TAG, "Total inserted count : " + insertedIds.length);
                     }
                 });
     }
@@ -172,26 +157,12 @@ public class TEDModel extends ViewModel {
         searchResponseObservable
                 .subscribeOn(Schedulers.io()) //run value creation code on a specific thread (non-UI thread) (defining where data insertion is done)
                 .observeOn(AndroidSchedulers.mainThread()) //observe the emitted value of the Observable on an appropriate thread
-                .subscribe(new Observer<SearchResponse>() {
-
+                .subscribe(new Consumer<SearchResponse>() {
                     @Override
-                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.annotations.NonNull SearchResponse searchResponse) {
-                        //TODO store data
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        Log.d(TEDApp.TAG, e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void accept(SearchResponse searchResponse) throws Exception {
+                        mAppDatabase.talksDao().deleteTedSearch();
+                        long[] insertedIds = mAppDatabase.talksDao().insertTedSearch(searchResponse.getResultList().toArray(new SearchVO[0]));
+                        Log.d(TEDApp.TAG, "Total inserted count : " + insertedIds.length);
                     }
                 });
     }

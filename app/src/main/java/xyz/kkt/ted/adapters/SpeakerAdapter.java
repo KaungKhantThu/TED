@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import xyz.kkt.ted.R;
+import xyz.kkt.ted.data.vos.SpeakerVO;
 import xyz.kkt.ted.data.vos.TalksVO;
 import xyz.kkt.ted.viewHolders.SpeakerViewHolder;
 import xyz.kkt.ted.viewHolders.TopicViewHolder;
@@ -14,7 +15,7 @@ import xyz.kkt.ted.viewHolders.TopicViewHolder;
  * Created by Lenovo on 11/8/2017.
  */
 
-public class SpeakerAdapter extends BaseRecycleAdapter<SpeakerViewHolder, TalksVO> {
+public class SpeakerAdapter extends BaseRecycleAdapter<SpeakerViewHolder, SpeakerVO> {
 
     public SpeakerAdapter(Context context) {
         super(context);

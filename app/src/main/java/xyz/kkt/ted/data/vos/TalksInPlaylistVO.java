@@ -1,29 +1,21 @@
+
 package xyz.kkt.ted.data.vos;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
+
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import xyz.kkt.ted.utils.TEDConstants;
 
-/**
- * Created by Lenovo on 1/24/2018.
- */
-@Entity(tableName = TEDConstants.TED_TALK_TABLE_NAME)//table name py tr
-@TypeConverters(TagTypeConverter.class)
-public class TalksVO {
+@Entity(tableName = TEDConstants.TALK_PLAY_LIST_TABLE_NAME)//table name py tr
+public class TalksInPlaylistVO {
 
     @PrimaryKey(autoGenerate = true)
-    private long talkTedId;
+    private long talksInPlaylistTedId;
 
     @SerializedName("description")
     private String description;
@@ -39,7 +31,7 @@ public class TalksVO {
     private SpeakerVO speaker;
 
     @SerializedName("tag")
-    private List<TagVO> tagList;
+    private List<TagVO> tag;
 
     @SerializedName("talk_id")
     private int talkId;
@@ -47,13 +39,12 @@ public class TalksVO {
     @SerializedName("title")
     private String title;
 
-
-    public long getTalkTedId() {
-        return talkTedId;
+    public long getTalksInPlaylistTedId() {
+        return talksInPlaylistTedId;
     }
 
-    public void setTalkTedId(long talkTedId) {
-        this.talkTedId = talkTedId;
+    public void setTalksInPlaylistTedId(long talksInPlaylistTedId) {
+        this.talksInPlaylistTedId = talksInPlaylistTedId;
     }
 
     public String getDescription() {
@@ -88,12 +79,12 @@ public class TalksVO {
         this.speaker = speaker;
     }
 
-    public List<TagVO> getTagList() {
-        return tagList;
+    public List<TagVO> getTag() {
+        return tag;
     }
 
-    public void setTagList(List<TagVO> tagList) {
-        this.tagList = tagList;
+    public void setTag(List<TagVO> tag) {
+        this.tag = tag;
     }
 
     public int getTalkId() {
