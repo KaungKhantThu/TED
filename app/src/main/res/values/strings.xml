@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TED</string>
+    <string name="action_settings">Settings</string>
+    <string name="msg_generic_no_data">No Data To Display</string>
+    <string name="lbl_refresh">Refresh</string>
+    <string name="title_ted">TED Talks</string>
+    <string name="dummy_name">Bill Gates</string>
+    <string name="dummy_title"><b>How to make a Business</b></string>
+    <string name="time">18:25</string>
+    <string name="podcast_title"><b>Big Five</b></string>
+    <string name="podcast_desc">Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc
+        Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc Desc
+        Desc Desc Desc Desc Desc Desc Desc DescDesc Desc Desc Desc Desc Desc DescDesc Desc Desc
+        Desc Desc Desc Desc Desc Desc DescDesc Desc Desc Desc Desc</string>
+    <string name="dummy_no_of_talks">7 Talks</string>
+    <string name="recommended_topics">Recommended Topics</string>
+    <string name="show_all_topics">Show all topics</string>
+    <string name="recommended_speakers">Recommended Speakers</string>
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="175dp"
+    android:layout_height="175dp">
+
+    <ImageView
+        android:id="@+id/iv_hero_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dalai_lama" />
+
+    <TextView
+        android:id="@+id/tv_no_of_talks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:text="@string/dummy_no_of_talks"
+        android:textColor="@color/white_full"
+        android:textSize="@dimen/text_regular_2x" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_no_of_talks"
+        android:layout_alignLeft="@id/tv_no_of_talks"
+        android:text="@string/dummy_title"
+        android:textColor="@color/white_full"
+        android:textSize="@dimen/text_heading_1x" />
+
+    <TextView
+        android:id="@+id/lbl_slash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_toRightOf="@id/tv_no_of_talks"
+        android:text="|"
+        android:textColor="@color/white_full"
+        android:textSize="@dimen/text_regular_3x" />
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_no_of_talks"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_toRightOf="@id/lbl_slash"
+        android:drawableLeft="@drawable/ic_more_vert_24dp"
+        android:text="@string/time"
+        android:textColor="@color/white_full" />
+
+
+</RelativeLayout>

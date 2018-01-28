@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+
+    <ImageView
+        android:id="@+id/iv_hero_talk"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dalai_lama" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_medium_3"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:text="@string/dummy_title"
+        android:textColor="@color/white_full"
+        android:textSize="@dimen/text_regular_3x" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_title"
+        android:layout_alignLeft="@id/tv_title"
+        android:text="@string/dummy_name"
+        android:textColor="@color/white_full"
+        android:textSize="@dimen/text_heading_1x" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_medium_2"
+        android:drawablePadding="@dimen/margin_medium_2"
+        android:drawableTop="@drawable/ic_more_vert_24dp"
+        android:text="@string/time"
+        android:textColor="@color/white_full"
+        android:textSize="@dimen/text_regular" />
+
+</RelativeLayout>
